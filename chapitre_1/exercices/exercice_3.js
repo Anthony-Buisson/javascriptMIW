@@ -1,0 +1,1 @@
+window.confirm('Voulez-vous continuer ?');
