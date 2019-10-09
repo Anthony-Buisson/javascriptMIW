@@ -1,1 +1,1 @@
-window.confirm('Voulez-vous continuer ?');
+alert(window.confirm('Voulez-vous continuer ?'));

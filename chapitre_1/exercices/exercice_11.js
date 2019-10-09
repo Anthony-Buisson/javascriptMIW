@@ -1,0 +1,1 @@
+alert(window.prompt('Mots séparés par _').replace(new RegExp('_','g'),'/'));
