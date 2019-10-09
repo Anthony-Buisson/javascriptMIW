@@ -4,15 +4,8 @@
     <list default="true" id="78d38fdf-e6aa-4c10-badc-7d7530492518" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_10.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_10.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_11.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_11.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_12.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_12.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_13.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_13.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_14.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_14.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_7.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_8.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chapitre_1/exercices/exercice_9.js" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/exercices/exercice_9.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chapitre_1/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/chapitre_1/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -66,7 +59,7 @@
       <option name="presentableId" value="Default" />
       <updated>1570540011389</updated>
       <workItem from="1570540012566" duration="5432000" />
-      <workItem from="1570622232094" duration="8303000" />
+      <workItem from="1570622232094" duration="9684000" />
     </task>
     <servers />
   </component>
