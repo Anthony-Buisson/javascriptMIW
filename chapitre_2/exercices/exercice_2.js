@@ -1,0 +1,1 @@
+alert('Ce nombre est '+(pair(parseFloat(prompt('Nombre')))?'pair':'impair'));
