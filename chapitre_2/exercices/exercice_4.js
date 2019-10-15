@@ -5,5 +5,4 @@ function somme(n){
     let somme = n*(n+1)/2;
     return somme;
 }
-
 alert(somme(a));
