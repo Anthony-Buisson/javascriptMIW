@@ -5,4 +5,9 @@ function somme(n){
     let somme = n*(n+1)/2;
     return somme;
 }
-alert(somme(a));
+if(isNaN((somme(a)))){
+    alert("Le nombre entré n'est pas un nombre");
+}else{
+    alert(somme(a));
+}
+
