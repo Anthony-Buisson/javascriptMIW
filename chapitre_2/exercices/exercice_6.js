@@ -1,0 +1,1 @@
+prompt('Mot de passe : ') === 'grossoles'? document.write('<script src="exercices/exercice_4.js"></script>') : location.reload();
