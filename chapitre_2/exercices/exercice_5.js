@@ -1,18 +1,21 @@
-function surfCarre() {
-    c = prompt("Saisie la longueur d'un coté du carré");
-    parseFloat(c);
-    alert(c*c);
+function surfCarre(c) {
+    return c*c;
 }
-function surfRect() {
-    c = prompt("Saisie la longueur du rectangle");
-    l = prompt("Saisie la largeur du rectangle");
-    parseFloat(c);
-    parseFloat(l);
-    alert(c*l);
+function surfRect(c,l) {
+    return c*l;
 }
 function surfCercle(r) {
-    r = prompt("Saisie le rayon du cercle");
-    parseFloat(r);
-    alert(r*r*Math.PI);
+    return r*r*Math.PI;
 }
-
+let r = prompt('Type de surface à calculer :\n1 : Carré\n2 : Rectangle\n3 : Cercle');
+switch (r) {
+    case "1":
+        alert('Surface : '+surfCarre(parseFloat(prompt('Longueur des côtés : '))));
+        break;
+    case "2":
+        alert('Surface : '+surfRect(parseFloat(prompt('Largeur : ')),parseFloat(prompt('Longueur des côtés : '))));
+        break;
+    case "3":
+        alert('Surface : '+surfCercle(parseFloat(prompt('Rayon : '))).toFixed(2));
+        break;
+}

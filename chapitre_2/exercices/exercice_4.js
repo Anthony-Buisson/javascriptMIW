@@ -1,13 +1,2 @@
-//Merci pour les exos
-let a = prompt("Saisi un nombre pd");
-function somme(n){
-    n = parseInt(n);
-    let somme = n*(n+1)/2;
-    return somme;
-}
-if(isNaN((somme(a)))){
-    alert("Le nombre entré n'est pas un nombre");
-}else{
-    alert(somme(a));
-}
-
+let n = prompt('Saisir N : ');
+entierPositif(n)?alert('Somme des '+n+" premiers nombres : "+((parseInt(n)*(parseInt(n)+1))/2)):alert('N n\'est pas un entier positif');
