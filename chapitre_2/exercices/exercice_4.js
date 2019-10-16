@@ -1,5 +1,5 @@
 //Merci pour les exos
-let a = prompt("Saisi un nombre pd");
+let a = prompt("Saisi un nombre");
 function somme(n){
     n = parseInt(n);
     let somme = n*(n+1)/2;
