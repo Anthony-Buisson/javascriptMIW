@@ -5,7 +5,7 @@ function entierPositif(n) {
     return (parseInt(n)===parseFloat(n) && n>=0 && nombre(n));
 }
 function pair(x){
-    return x%2===0 && entierPositif(x);
+    return x%2===0 && entierPositif(x.toString());
 }
 function arrondi(x,n){
     return x.toFixed(n);
