@@ -39,9 +39,11 @@ function suppression(n) {
     }
 }
 function supprimerListe(n = Pdebut) {
+    if(!Pdebut) return;
     if(n.pSuivant !== null){
         let tmp = n.pSuivant;
         delete n.pSuivant;
+        delete n.nom;
         supprimerListe(tmp);
     }
     if(n === Pdebut) Pdebut = null;
