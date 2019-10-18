@@ -15,11 +15,15 @@ function liste() {
 }
 function ajout(n) {
     let reg = /^[a-z]{2,20}$/i;
-    if(!reg.test(n)) throw new Error();
-    n = n.charAt(0).toUpperCase()+n.toLowerCase().slice(1);
+    if(!reg.test(n) || !n){
+        alert('Format invalide : 2<longueur<20');
+        return;
+    }
+    n = n.charAt(0).toUpperCase() + n.toLowerCase().slice(1);
     let Pnouveau = new Tpersonne(n);
-    if(Pdebut) Pnouveau.pSuivant = Pdebut;
+    if (Pdebut) Pnouveau.pSuivant = Pdebut;
     Pdebut = Pnouveau;
+    afficherListe();
 }
 function suppression(n) {
     let s = Pdebut;
@@ -38,7 +42,7 @@ function suppression(n) {
         delete s.pSuivant;
     }
 }
-function supprimerListe(n = Pdebut) {
+function supprimerListeRecursif(n = Pdebut) {
     if(!Pdebut) return;
     if(n.pSuivant !== null){
         let tmp = n.pSuivant;
@@ -48,7 +52,19 @@ function supprimerListe(n = Pdebut) {
     }
     if(n === Pdebut) Pdebut = null;
 }
+function supprimerListe() {
+    let s = Pdebut;
+    let tmp;
+    while (s){
+        tmp = s.pSuivant;
+        delete s.nom;
+        delete s.pSuivant;
+        s = tmp;
+    }
+    Pdebut = null;
+}
 function init() {
+    // supprimerListeRecursif();
     supprimerListe();
 }
 function afficherListe() {//liste() renvoie une chaine de caractères correspondant à tous les noms
