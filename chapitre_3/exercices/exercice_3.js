@@ -1,4 +1,4 @@
-document.getElementById('exercice2').innerHTML =
+document.getElementById('exercice').innerHTML =
     '<input id="euros" type="number" step="0.001" onchange="update(\'francs\',this.value)"><label>Euros</label><br>' +
     '<input id="francs" type="number" step="0.001" onchange="update(\'euros\',this.value)"><label>Francs</label><br>';
 

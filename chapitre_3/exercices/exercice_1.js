@@ -1,4 +1,4 @@
-document.getElementById('exercice1')
+document.getElementById('exercice')
     .innerHTML = '<form>' +
                     '<textarea id="textarea"></textarea>' +
                     '<p id="output">Nombre de caractères : </p>' +

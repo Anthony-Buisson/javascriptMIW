@@ -1,4 +1,4 @@
-document.getElementById('exercice2')
+document.getElementById('exercice')
 .innerHTML = '<form>' +
     '<label for="name">Nom</label><input name="name" type="text" required><br>' +
     '<label for="surname">Prénom</label><input name="surname" type="text" required><br>' +
