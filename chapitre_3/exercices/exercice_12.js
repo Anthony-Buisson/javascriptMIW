@@ -9,13 +9,28 @@ document.getElementById('exercice12')
                 '<div id="mapid" style="height: 650px;"></div>';
 
 //création de la carte (centrée sur la france entière)
-mymap = L.map('mapid').setView([46.52863469527167,2.43896484375], 6);
+let mymap = L.map('mapid').setView([46.52863469527167,2.43896484375], 6);
+let popup = L.popup();
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>' }).addTo(mymap);
+mymap.on('click', onMapClick);
 
 //enlever la carte précédente et la remettre avec les nouvelles coordonnées
 function updateMap(coord){
-    coord = coord.split(':');
     mymap.remove();
-    mymap = L.map('mapid').setView([coord[0], coord[1]], coord === '46.52863469527167:2.43896484375'? 6 : 13);
+    coord = coord.split(':');
+    if(coord.join(':') === '46.52863469527167:2.43896484375'){
+        mymap = L.map('mapid').setView([coord[0], coord[1]], 6);
+    }
+    else{
+        mymap = L.map('mapid').setView([coord[0], coord[1]], 13);
+        L.marker([coord[0], coord[1]]).addTo(mymap);
+    }
+    mymap.on('click', onMapClick);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>' }).addTo(mymap);
+}
+
+function onMapClick(e) {
+    popup.setLatLng(e.latlng)
+        .setContent(e.latlng.lat + ', ' + e.latlng.lng)
+        .openOn(mymap);
 }
