@@ -14,14 +14,14 @@ function liste() {
     return noms;
 }
 function ajout(n) {
-    let reg = /^[a-z]{2,20}$/i;
+    let reg = /^[a-z]{2,20}$/i;//regex pour tester la longueur et le type des caractères saisis
     if(!reg.test(n) || !n){
         alert('Format invalide : 2<longueur<20');
         return;
     }
-    n = n.charAt(0).toUpperCase() + n.toLowerCase().slice(1);
+    n = n.charAt(0).toUpperCase() + n.toLowerCase().slice(1);//nom avec la premiere lettre en majuscule et le reste en minuscules
     let Pnouveau = new Tpersonne(n);
-    if (Pdebut) Pnouveau.pSuivant = Pdebut;
+    if (Pdebut) Pnouveau.pSuivant = Pdebut;//test si la chaine a déjà au moins un élément
     Pdebut = Pnouveau;
     afficherListe();
 }
@@ -56,14 +56,15 @@ function supprimerListe() {
     let s = Pdebut;
     let tmp;
     while (s){
-        tmp = s.pSuivant;
-        delete s.nom;
+        tmp = s.pSuivant; //on garde le suivant
+        delete s.nom;   //on supprime le courant
         delete s.pSuivant;
         s = tmp;
     }
     Pdebut = null;
 }
 function init() {
+    //fonction pour utiliser la suppression récursive
     // supprimerListeRecursif();
     supprimerListe();
 }
