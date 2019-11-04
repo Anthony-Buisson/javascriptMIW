@@ -1,0 +1,37 @@
+form{
+    width: fit-content;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    background-color: lightblue;
+}
+button{
+    border-radius: 0.25rem;
+    border-style: solid;
+    border-width: 1px;
+    border-color: orange;
+    background-color: orange;
+    margin: 2px;
+}
+button:hover{
+    border-width: 3px;
+    margin: 0;
+}
+fieldset>*{
+    display: inline-flex;
+    flex-direction: row;
+    flex-basis: max-content;
+}
+input{
+    width: -moz-available;
+}
+label{
+    width: 86px;
+    margin-bottom: 0.5rem;
+}
+.result>label{
+    width: 150px;
+}
+.controls{
+    margin: 0.5rem auto;
+    width: fit-content;
+}
