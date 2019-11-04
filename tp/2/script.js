@@ -29,12 +29,17 @@ function validationCmd() {
      let labels = document.forms[0].getElementsByTagName('label');
      let valid = true;
      let ch='';
-    for (let i = 0; i < inputs.length; i++) {
-        if(!inputs[i].checkValidity()){
-            valid = false;
-            ch+= '\n'+labels[i].innerHTML.replace(' : ','')+' invalide';
-        }
-    }
+     if(document.getElementById('mtHT').value <= 0.00){
+         valid = false;
+         ch += '\naucun prix sélectionné';
+     }else {
+         for (let i = 0; i < inputs.length; i++) {
+             if (!inputs[i].checkValidity()) {
+                 valid = false;
+                 ch += '\n' + labels[i].innerHTML.replace(' : ', '') + ' invalide';
+             }
+         }
+     }
     valid ? alert('Formulaire correct !') : alert('Formulaire incorrect : '+ch);
 }
 function affLigne(n) {
@@ -73,9 +78,9 @@ function afficheForm() {
     ch+= '</fieldset>' +
         '    <fieldset class="result">' +
         '        <legend>Résultat</legend>' +
-        '        <label for="mtHT">Mt HT : </label><input id="mtHT" type="text" readonly><br>' +
-        '        <label for="mtTVA">Mt TVA (20%) : </label><input id="mtTVA" type="text" readonly><br>' +
-        '        <label for="mtTTC">Mt TTC : </label><input id="mtTTC" type="text" readonly>' +
+        '        <label for="mtHT">Mt HT : </label><input id="mtHT" type="number" readonly><br>' +
+        '        <label for="mtTVA">Mt TVA (20%) : </label><input id="mtTVA" type="number" readonly><br>' +
+        '        <label for="mtTTC">Mt TTC : </label><input id="mtTTC" type="number" readonly>' +
         '    </fieldset><div class="controls">' +
         '    <button type="reset">Reset</button>' +
         '    <button type="button" onclick="validationCmd()">Valider</button></div>' +
