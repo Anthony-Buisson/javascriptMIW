@@ -1,12 +1,12 @@
-let libProd = ['choisir','PC','imprimante','moniteur','câble'];
+let libProd = ['--choisir--','PC','imprimante','moniteur','câble'];
 let prxProd = ['', 1000,80,150,20];
 
 function plus(n) {
     if(document.forms[0].product[n].value === '') return;
-    document.forms[0].quantity[n].value = Number(document.forms[0].quantity[n].value) + 1;
+    document.forms[0].quantity[n].value++;
 }
 function moins(n) {
-    if(document.forms[0].quantity[n].value > 1 && document.forms[0].product[n].value !== '') document.forms[0].quantity[n].value -= 1;
+    if(document.forms[0].quantity[n].value > 1 && document.forms[0].product[n].value !== '') document.forms[0].quantity[n].value--;
 }
 function sup(n) {
     document.forms[0].quantity[n].value = '';
@@ -88,5 +88,4 @@ function afficheForm() {
         '</form>';
     document.getElementsByTagName('body')[0].innerHTML = ch;
 }
-
 afficheForm();
