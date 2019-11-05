@@ -1,4 +1,4 @@
-let libProd = ['--choisir--','PC','imprimante','moniteur','câble'];
+let libProd = ['--Choisir--','PC','imprimante','moniteur','câble'];
 let prxProd = ['', 1000,80,150,20];
 
 function plus(n) {
@@ -72,20 +72,20 @@ function afficheForm() {
                 <label for="email">E-mail : </label><input id="email" type="email" pattern="^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$" placeholder="Exemple: prenom@gmail.com" required>
             </fieldset>
             <fieldset onclick="affMontant()">
-                <legend>Sélection des produits</legend>`;
-    ch+= creerLigneProduit(0);
-    ch+= creerLigneProduit(1);
-    ch+= creerLigneProduit(2);
-    ch+= '</fieldset>' +
-        '    <fieldset class="result">' +
-        '        <legend>Résultat</legend>' +
-        '        <label for="mtHT">Mt HT : </label><input id="mtHT" type="number" readonly><br>' +
-        '        <label for="mtTVA">Mt TVA (20%) : </label><input id="mtTVA" type="number" readonly><br>' +
-        '        <label for="mtTTC">Mt TTC : </label><input id="mtTTC" type="number" readonly>' +
-        '    </fieldset><div class="controls">' +
-        '    <button type="reset">Reset</button>' +
-        '    <button type="button" onclick="validationCmd()">Valider</button></div>' +
-        '</form>';
+                <legend>Sélection des produits</legend>`+
+                creerLigneProduit(0)+
+                creerLigneProduit(1)+
+                creerLigneProduit(2)+
+        `</fieldset>
+            <fieldset class="result">
+                <legend>Résultat</legend>
+                <label for="mtHT">Mt HT : </label><input id="mtHT" type="number" readonly><br>
+                <label for="mtTVA">Mt TVA (20%) : </label><input id="mtTVA" type="number" readonly><br>
+                <label for="mtTTC">Mt TTC : </label><input id="mtTTC" type="number" readonly>
+            </fieldset><div class="controls">
+            <button type="reset">Reset</button>
+            <button type="button" onclick="validationCmd()">Valider</button></div>
+        </form>`;
     document.getElementsByTagName('body')[0].innerHTML = ch;
 }
 afficheForm();
