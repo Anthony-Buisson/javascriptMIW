@@ -43,6 +43,7 @@ String.prototype.extend({
 });
 /*
 let testString = '       123  ';
+console.log(testString.replace(new RegExp(' ','g'),'-'));
 console.log(testString.trim());
 */
 
