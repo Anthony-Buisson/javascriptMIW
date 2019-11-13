@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Partiel Javascript - exercice 1</title>
+</head>
+<body>
+</body>
+<script>
+    'use strict';
+    /*A)*/
+    let Reg = {
+        isbn: /^97[89]-\d-\d{5}-\d{3}-\d$/
+    };
+    /*B)*/
+    let conformeISBN = function(n){
+        return Reg.isbn.test(n);
+    };
+    /*C)*/
+    let valideISBn = function (n) {
+        n = n.split('-');
+        let key = n.pop()*1;
+        n = n.join('').split('');
+        //n n'a plus de tirets et la clé est sauvegardée à part
+        let somme = 0;
+        for (let i = 0; i < n.length; i++) {
+            somme+= (i%2 === 0) ? n[i]*1 : n[i]*3;//pair = *1 pour en faire un nombre, impair = *3
+        }
+        somme+=key;
+        return somme%10 === 0;
+    };
+    /*D)*/
+    let form = `
+        <form>
+            <label for="isbn">ISBN-13 : </label>
+            <input id="isbn" type="text"  pattern="${Reg.isbn}" required><br>
+            <button id="validationISBN" type="button">OK</button>
+            <input type="text" id="estValide" name="estValide" readonly>
+        </form>`;
+
+    let test = function(n){
+        if(n.length === 0)
+            document.getElementsByName('estValide')[0].value = 'Saisir un numéro ISBN';
+        else if(!conformeISBN(n))
+            document.getElementsByName('estValide')[0].value = 'ISBN non conforme';
+        else if(!valideISBn(n)){
+            document.getElementsByName('estValide')[0].value = 'ISBN non valide';
+        } else
+            document.getElementsByName('estValide')[0].value = 'ISBN valide';
+    };
+    document.body.innerHTML = form;
+    document.getElementById('validationISBN').onclick = function () {
+        let valeurISBN = document.getElementById('isbn').value;
+        test(valeurISBN);
+    };
+</script>
+<style>
+    input:valid{
+        border: 1px solid lightgreen;
+    }
+    input:invalid{
+        border: 1px solid red;
+    }
+    #estValide{
+        border: 1px solid black;
+    }
+</style>
+</html>

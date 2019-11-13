@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Partiel Javascript - exercice 2</title>
+</head>
+<body>
+
+</body>
+<script>
+    'use strict';
+    let temp = [
+        {ville: '--Choisir--', max: '', min: '', moy: ''},
+        {ville: 'Gap', max:38, min: -10, moy: 18},
+        {ville: 'Paris', max:20, min: -15, moy: 12},
+        {ville: 'Marseille', max:50, min: -100, moy: 45}
+    ];
+
+    let creerOptions = function(){
+        let options = '';
+        for (let i = 0; i < temp.length; i++) {
+            options += `<option value="${i}">${temp[i].ville}</option>`;
+        }
+        return options;
+    };
+
+    let form = `<form>
+                    <select name="ville" id="choixVille">
+                        ${creerOptions()}
+                    </select>
+                    <label for="tempMax">Température maximale : </label><input type="text" id="tempMax" name="temp" readonly><br>
+                    <label for="tempMin">Température minimale : </label><input type="text" id="tempMin" name="temp" readonly><br>
+                    <label for="tempMoy">Température moyenne : </label><input type="text" id="tempMoy" name="temp" readonly><br>
+                </form>`;
+
+    let afficherTemperatures = function(){
+        let index = this.value;
+        let inputs = document.getElementsByName('temp');
+        inputs[0].value = temp[index].max;
+        inputs[1].value = temp[index].min;
+        inputs[2].value = temp[index].moy;
+    };
+
+    document.body.innerHTML = form;
+    document.getElementsByName('ville')[0].onchange = afficherTemperatures;
+</script>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Partiel Javascript - exercice 3</title>
+</head>
+<body>
+
+</body>
+<script>
+    'use strict';
+    let devises = [
+        {nom:'Euro', cours: 1},
+        {nom:'USD Dollar Américain', cours: 1.2693},
+        {nom:'FRF France', cours: 6.55957},
+        {nom:'AUD Dollar Australien', cours: 1.443},
+    ];
+
+    let lignesDevises = '';
+    for (let i = 0; i < devises.length; i++) {
+        lignesDevises+= `<tr>
+                            <td>${devises[i].nom}</td>
+                            <td><input name="montant" type="text" id="montant-${i}" value="${devises[i].cours}"></td>
+                            <td>1 Euro = ${devises[i].cours} ${devises[i].nom.split(' ')[0]}</td>
+                        </tr>`;
+    }
+    let convertisseur = `
+        <table id="convert">
+            <thead>
+                <th colspan="3">CONVERTISSEUR</th>
+            </thead>
+            <thead>
+                <th>Devise</th>
+                <th>Montant</th>
+                <th>Cours</th>
+            </thead>
+            <tbody>
+                ${lignesDevises}
+            </tbody>
+        </table>`;
+
+    let majPrix = function(){
+        let choisie = this.id.split('-')[1];//index de la devise
+
+        for (let i = 0; i < document.getElementsByName('montant').length; i++) {
+            /*on sélectionne les input un par un pour les actualiser*/
+            if(this.value != parseFloat(this.value))
+                document.getElementById('montant-'+i).value = 'ERREUR';
+            else if(document.getElementById('montant-'+i) !== this){
+                document.getElementById('montant-'+i).value = (this.value*(devises[i].cours/devises[choisie].cours)).toFixed(4);
+            }
+        }
+    };
+
+    document.body.innerHTML = convertisseur;
+    for (let i = 0; i < devises.length; i++) {
+        document.getElementById('montant-'+i).onchange = majPrix;
+    }
+</script>
+<style>
+    table, td, th{
+        border: 1px solid black
+    }
+    input{
+        text-align:center;
+    }
+
+</style>
+</html>
