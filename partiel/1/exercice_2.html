@@ -20,13 +20,13 @@
     let creerOptions = function(){
         let options = '';
         for (let i = 0; i < temp.length; i++) {
-            options += `<option value="${i}">${temp[i].ville}</option>`;
+            options += `<option>${temp[i].ville}</option>`;
         }
         return options;
     };
 
     let form = `<form>
-                    <select name="ville" id="choixVille">
+                    <select name="ville">
                         ${creerOptions()}
                     </select>
                     <label for="tempMax">Température maximale : </label><input type="text" id="tempMax" name="temp" readonly><br>
@@ -35,7 +35,7 @@
                 </form>`;
 
     let afficherTemperatures = function(){
-        let index = this.value;
+        let index = this.selectedIndex;
         let inputs = document.getElementsByName('temp');
         inputs[0].value = temp[index].max;
         inputs[1].value = temp[index].min;

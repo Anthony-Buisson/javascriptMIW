@@ -21,7 +21,7 @@
     for (let i = 0; i < devises.length; i++) {
         lignesDevises+= `<tr>
                             <td>${devises[i].nom}</td>
-                            <td><input name="montant" type="text" id="montant-${i}" value="${devises[i].cours}"></td>
+                            <td><input name="montant" type="text" value="${devises[i].cours}"></td>
                             <td>1 Euro = ${devises[i].cours} ${devises[i].nom.split(' ')[0]}</td>
                         </tr>`;
     }
@@ -41,17 +41,16 @@
         </table>`;
 
     let majPrix = function(){
-        let choisie = this.id.split('-')[1];//index de la devise
-
+        let choisie = Array.from(document.getElementsByName('montant')).indexOf(this);//index de la devise
         for (let i = 0; i < document.getElementsByName('montant').length; i++) {
             /*on sélectionne les input un par un pour les actualiser*/
-            document.getElementById('montant-'+i).value = (this.value != parseFloat(this.value)) ? 'ERREUR' : (this.value*(devises[i].cours/devises[choisie].cours)).toFixed(4);
+            document.getElementsByName('montant')[i].value = (this.value != parseFloat(this.value)) ? 'ERREUR' : (this.value*(devises[i].cours/devises[choisie].cours)).toFixed(4);
         }
     };
 
     document.body.innerHTML = convertisseur;
     for (let i = 0; i < devises.length; i++) {
-        document.getElementById('montant-'+i).onchange = majPrix;
+        document.getElementsByName('montant')[i].onchange = majPrix;
     }
 </script>
 <style>
@@ -61,6 +60,5 @@
     input{
         text-align:center;
     }
-
 </style>
 </html>
