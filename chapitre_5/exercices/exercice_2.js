@@ -55,12 +55,16 @@ class ISBN {
         button.type = 'button';
         button.appendChild(document.createTextNode('OK'));
 
-        input.id = 'estValide'+ISBN.id;
-        input.type = 'text';
-        input.name = 'estValide';
-        input.readOnly = true;
+        output.id = 'estValide'+ISBN.id;
+        output.type = 'text';
+        output.name = 'estValide';
+        output.readOnly = true;
 
-        form.appendChild(label, input, br, button, output);
+        form.appendChild(label);
+        form.appendChild(input);
+        form.appendChild(br);
+        form.appendChild(button);
+        form.appendChild(output);
         return form;
     }
 }
