@@ -8,6 +8,7 @@
 <body>
 </body>
 <script>
+    //978-2-86889-006-1
     'use strict';
     /*A)*/
     let Reg = {
@@ -19,15 +20,12 @@
     };
     /*C)*/
     let valideISBn = function (n) {
-        n = n.split('-');
-        let key = n.pop()*1;
-        n = n.join('').split('');
-        //n n'a plus de tirets et la clé est sauvegardée à part
+        n = n.replace(/-/g,'');
+        n+='0';
         let somme = 0;
-        for (let i = 0; i < n.length; i++) {
-            somme+= (i%2 === 0) ? n[i]*1 : n[i]*3;//pair = *1 pour en faire un nombre, impair = *3
+        for (let i = 0; i < n.length; i+=2) {
+            somme+= n[i]*1 + n[i+1]*3;
         }
-        somme+=key;
         return somme%10 === 0;
     };
     /*D)*/
