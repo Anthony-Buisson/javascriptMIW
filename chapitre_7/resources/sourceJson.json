@@ -1,0 +1,17 @@
+[
+  {
+    "nom": "Dupont",
+    "prenom": "Léo",
+    "age": 20
+  },
+  {
+    "nom": "Grant",
+    "prenom": "Eric",
+    "age": 45
+  },
+  {
+    "nom": "Ramoin",
+    "prenom": "Xavier",
+    "age": 25
+  }
+]

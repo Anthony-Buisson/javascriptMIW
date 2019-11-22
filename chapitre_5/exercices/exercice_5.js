@@ -3,7 +3,7 @@ class JeuImage {
     constructor(img){
         this.img = img;
         this.img.style['position'] = 'absolute';
-        this.vitesse = random(1,5);
+        this.vitesse = random(1,3);
         this.pX = this.vitesse%3 === 0 ? this.vitesse : -this.vitesse;
         this.pY = this.vitesse%2 === 0 ? this.vitesse : -this.vitesse;
         this.affiche(random(0,this.windowWidth()-this.img.width),random(0,this.windowHeight()-this.img.height));

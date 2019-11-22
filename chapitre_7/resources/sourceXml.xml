@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tableau>
+    <client>
+        <nom>Dupont</nom>
+        <prenom>Léo</prenom>
+        <age>20 ans</age>
+    </client>
+    <client>
+        <nom>Grant</nom>
+        <prenom>Eric</prenom>
+        <age>45 ans</age>
+    </client>
+    <client>
+        <nom>Ramoin</nom>
+        <prenom>Xavier</prenom>
+        <age>25 ans</age>
+    </client>
+</tableau>
