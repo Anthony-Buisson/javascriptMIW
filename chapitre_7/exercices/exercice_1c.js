@@ -17,10 +17,10 @@ function ajax() {
             html += `<table>`;
             JSON.parse(req.responseText).forEach(function (el) {
                 html += `<tr>
-            <td>${el.nom}</td>
-            <td>${el.prenom}</td>
-            <td>${el.age}</td>
-        </tr>`
+                            <td>${el.nom}</td>
+                            <td>${el.prenom}</td>
+                            <td>${el.age}</td>
+                        </tr>`
             });
             _('#resultat').innerHTML += html+`</table>`;
         }
