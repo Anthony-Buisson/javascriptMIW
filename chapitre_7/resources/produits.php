@@ -5,7 +5,8 @@ try{
 catch (Exception $e){
     die('Erreur : ' . $e->getMessage());
 }
-$reponse = $bdd->prepare('SELECT * FROM produits WHERE codeCat=\''.$_POST['codeCat'].'\'');
+$reponse = $bdd->prepare('SELECT * FROM produits WHERE codeCat=:codeCat');
+$reponse->bindValue('codeCat', $_POST['codeCat']);
 $reponse->execute();
 $tabJson = array();
 while ($donnees = $reponse->fetch()){
