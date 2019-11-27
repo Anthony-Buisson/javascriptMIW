@@ -1,12 +1,3 @@
-function Xhr() {
-    let obj = null;
-    try{obj = new ActiveXObject("Microsoft.XMLHTTP");}
-    catch (Error) { try {obj = new ActiveXObject("MSXML2.XMLHTTP");}
-    catch (Error) { try {obj = new XMLHttpRequest();}
-    catch(Error) { alert('Impossible de créer l\'objet XMLHttpRequest');}}}
-    return obj;
-}
-
 function ajax() {
     let req = Xhr();
     req.open("GET", "resources/sourceXml.xml", true);
@@ -20,9 +11,9 @@ function ajax() {
             let prenoms = req.responseXML.getElementsByTagName('prenom');
             for(let i = 0; i < noms.length; i++) {
                 client = _cn('tr');
-                client.appendChild(_cn('td').appendChild(document.createTextNode(noms[i].firstChild.data)));
-                client.appendChild(_cn('td').appendChild(document.createTextNode(prenoms[i].firstChild.data)));
-                client.appendChild(_cn('td').appendChild(document.createTextNode(ages[i].firstChild.data)));
+                _ce('td',client).appendChild(_ct(noms[i].firstChild.data));
+                _ce('td',client).appendChild(_ct(prenoms[i].firstChild.data));
+                _ce('td',client).appendChild(_ct(ages[i].firstChild.data));
                 tableau.appendChild(client);
             }
             _('#resultat').appendChild(tableau);
@@ -30,3 +21,7 @@ function ajax() {
     };
     _('a').style.visibility = 'hidden';
 }
+
+_cn('div',{id: 'resultat'},{}, document.body);
+let link = _cn('a',{href: 'javascript:ajax();'},{}, document.body);
+_ct('Clique !', link);
