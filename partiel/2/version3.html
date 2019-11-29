@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Partiel JS - version 3</title>
+</head>
+<body>
+
+</body>
+<script src="miw%20V%2021%2011%202019.js"></script>
+<script>
+    'use strict';
+    class Releve{
+
+        constructor(temp, node){
+            this.temp = temp;
+            this.node = node;
+        }
+
+        /**
+         * Fonction créant un tableau de relevés de températures
+         * depuis des données JSON
+         *
+         * @param x position du tableau en pixels à partir de la gauche
+         * @param y position du tableau en pixels à partir du haut de la page
+         */
+        display(x,y){
+            /*Génération du tableau, en-tête et corps vide*/
+            let table = _cn('table', null, {border: '1px ridge black', position: 'absolute', top: y+'px', left: x+'px'}, this.node);
+            let headerrow = _ce('thead',table);
+            let headers = ["Mois","Minimum","Maximum","Moyenne", "Détail"];
+            headers.forEach(function (header) {
+                let headerCell = _cn('th', null, {border: '1px ridge black'}, headerrow);
+                _ct(header, headerCell);
+            });
+            let corpTab = _ce('tbody', table);
+            let that = this;
+
+            /*Ajout des relevés pour chaque mois*/
+            this.temp.forEach(function(mois) {
+                try{
+                    /*Création ligne*/
+                    let ligneMois = _cn('tr', {class: 'ligneMois'}, {'background-color': 'grey'}, corpTab);
+
+                    /*Création 4 cellules*/
+                    let nom = _cn('td', null, {color: 'white','background-color': 'transparent', border: '1px ridge black'},ligneMois);
+                    let min = _cn('td', null, {color: 'white','background-color': 'transparent', border: '1px ridge black'},ligneMois);
+                    let max = _cn('td', null, {color: 'white','background-color': 'transparent', border: '1px ridge black'},ligneMois);
+                    let avg = _cn('td',null, {color: 'white','background-color': 'transparent', border: '1px ridge black'},ligneMois);
+                    let detail = _cn('td', null, {color: 'white','background-color': 'transparent', display: 'none', border: 0},ligneMois);
+
+                    /*Ajout du texte dans chaque cellule*/
+                    _ct(mois.mois, nom);
+                    _ct(mois.tp.min(), min);
+                    _ct(mois.tp.max(), max);
+                    _ct(mois.tp.avg(), avg);
+                    _ct(mois.tp, detail);
+
+                    /*Gestion du clique pour l'affichage des détails*/
+                    ligneMois.onclick = function () { that.foldOrUnfold(ligneMois); };
+                }
+                catch (e) { console.log('erreur'+e); }
+            });
+
+            /*Ajout des couleurs au survol*/
+            _('.ligneMois').forEach(function (ligne) {
+                ligne.onmouseover = that.colorGreen;
+                ligne.onmouseleave = that.colorGrey;
+            });
+        }
+
+        colorGreen(){ this.css({'background-color': 'darkgreen'}) }
+        colorGrey(){ this.css({'background-color': 'grey'}) }
+
+        /**
+         * Méthode qui change :
+         *      -le style de la dernière cellule sur la ligne concernée (entre inline et none)
+         *      -le style de la ligne (entre vert et gris)
+         *      -l'évènement lié au survol de la ligne (entre colorGreen et colorGrey)
+         *
+         * @param element, la ligne du tableau qui est cliquée
+         **/
+        foldOrUnfold(element){
+            /*On sélectionne seulement les td de la ligne qui nous intéresse*/
+            let celluleDetails = element.querySelectorAll('td')[element.querySelectorAll('td').length-1];
+            if(celluleDetails.style.display === 'inline'){
+                celluleDetails.css({'display' : 'none'});
+                element.css({'background-color': 'grey'}).onmouseleave = this.colorGrey;
+            }else{
+                celluleDetails.css({'display' : 'inline'});
+                element.css({'background-color': 'darkgreen'}).onmouseleave = null;
+            }
+        }
+    }
+
+    /*Programme principal*/
+    let temp = [{"mois":"Janvier","tp":[2,1,5,2,10,-10,11,2,1,0,5,2,2,10,5,2,2,0,-2,1,2,0,5,-8,0,5,2,2,10,5,2]},
+        {"mois":"Février","tp":[2,0,5,2,10,10,5,-2,-2,10,5,2,2,8,5,10,12,10,5,10,10,10,11,8,10,5,10,10]},
+        {"mois":"Mars","tp":[2,1,5,1,12,10,5,1,12,10,5,1,2,10,1,1,12,10,15,12,12,10,15,12,10,15,12,12,10,15,12]},
+        {"mois":"Avril","tp":[1,1,5,1,10,10,9,12,9,10,9,12,2,10,15,12,12,10,15,12,12,10,15,12,10,15,12,12,10,15]},
+        {"mois":"Mai","tp":[12,10,15,12,12,10,15,12,12,10,15,12,12,10,15,12,12,10,15,12,12,10,15,12,10,15,12,12,10,15,12]},
+        {"mois":"Juin","tp":[12,10,25,12,22,20,15,12,12,10,15,12,12,10,25,12,22,20,25,12,22,22,15,12,10,15,12,12,10,15]},
+        {"mois":"Juillet","tp":[22,30,25,22,22,30,25,22,22,30,35,32,32,30,25,22,22,30,25,22,22,30,25,22,30,25,32,32,20,25,22]},
+        {"mois":"Aout","tp":[23,31,26,23,23,29,24,21,21,31,31,30,30,30,24,22,23,30,28,22,22,30,28,22,31,25,30,28,20,28,22]},
+        {"mois":"Septembre","tp":[22,30,25,22,22,30,25,22,22,30,35,32,32,30,25,22,22,30,25,22,22,30,25,22,30,25,32,32,20,25]},
+        {"mois":"Octobre","tp":[12,10,15,12,12,10,15,12,12,10,15,12,12,10,15,12,12,10,15,12,12,10,15,12,10,15,12,12,10,15,12]},
+        {"mois":"Novembre","tp":[12,10,15,12,12,10,15,12,12,10,15,12,12,10,15,12,12,10,15,12,12,10,15,12,10,15,12,12,10,15]},
+        {"mois":"Décembre","tp":[12,10,12,10,12,10,12,10,10,8,12,8,12,8,9,13,12,13,14,12,10,8,10,9,10,9,8,9,10,8,12]}];
+
+    let gap = new Releve(temp, document.body);
+    gap.display(100,100);
+</script>
+</html>

@@ -1,6 +1,6 @@
 <?php
 try{
-    $bdd = new PDO('mysql:host=localhost;dbname=tp7js;charset=utf8', 'root', '');
+    $bdd = new PDO('mysql:host=localhost;dbname=bdproduits;charset=utf8', 'root', '');
 }
 catch (Exception $e){
     die('Erreur : ' . $e->getMessage());
