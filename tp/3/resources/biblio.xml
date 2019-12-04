@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<livres>
+    <livre id="1">
+        <titre>Les Misérables (T1)</titre>
+        <auteur>DICKENS Charles</auteur>
+        <genre>Roman</genre>
+        <editeur>Editions de l'Erable</editeur>
+        <disponible>non</disponible>
+    </livre>
+    <livre id="2">
+        <titre>Les Misérables (T2)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="3">
+        <titre>Les Miables (T3)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="4">
+        <titre>Misérables (T4)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="5">
+        <titre>Misérables (T5)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="6">
+        <titre>Misérables (T6)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="7">
+        <titre>Misérables (T7)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="8">
+        <titre>Misérables (T8)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="9">
+        <titre>Misérables (T9)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="10">
+        <titre>Misérables (T10)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="11">
+        <titre>Misérables (T11)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="12">
+        <titre>Misérables (T12)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="13">
+        <titre>Misérables (T13)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="14">
+        <titre>Misérables (T14)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="15">
+        <titre>Misérables (T15)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="16">
+        <titre>Misérables (T16)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="17">
+        <titre>Misérables (T17)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="18">
+        <titre>Misérables (T18)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="19">
+        <titre>Misérables (T19)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="20">
+        <titre>Misérables (T20)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="21">
+        <titre>Misérables (T21)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="22">
+        <titre>Misérables (T22)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+    <livre id="23">
+        <titre>Misérables (T23)</titre>
+        <auteur>HUGO Victor</auteur>
+        <genre>Roman</genre>
+        <editeur>Flammarion</editeur>
+        <disponible>oui</disponible>
+    </livre>
+</livres>
