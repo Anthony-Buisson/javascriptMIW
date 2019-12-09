@@ -60,7 +60,11 @@
 	};
 	_dn = 	function(node)	{                               // pour supprimer un noeud
 		node.parentNode.removeChild(node);
-	}
+	};
+
+	random = function(min, max) {
+		return Math.floor(Math.random() * (max+1 - min) + min);
+	};
 
 	/******************************************************************************************************/
 	/***********************  Gestion fenêtre   ***********************************************************/
@@ -73,7 +77,7 @@
 		else if (document.body.clientWidth)
 			return document.body.clientWidth;            // IE non strict
 		else 		retun -1;                              		 // anciens navigateurs
-	}
+	};
 
 	windowHeight = function(){
 		if (window.innerHeight)   return window.innerHeight;        // tous les navigateurs sauf IE
@@ -82,14 +86,14 @@
 		else if (document.body.clientHeight)
 			return document.body.clientHeight;           // IE non strict
 		else 		return -1;	          						 // anciens navigateurs
-	}
+	};
 
 	/******************************************************************************************************/
 	/*************   Raccourci pour parcourir et traiter les propriétés d'un objet  ***********************/
 	/******************************************************************************************************/
 	_each = function(o,f){                            // f est une fonction Callback c a d une  fonction qui sera définie au moment de l'appel de la fonction _each
 		for (let i in o){f(i,o[i])}
-	}
+	};
 	/******************************************************************************************************/
 	/***********************  Extension de toutes les classes avec la fonction  extend  *******************/
 	/******************************************************************************************************/
