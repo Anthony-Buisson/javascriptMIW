@@ -16,7 +16,7 @@ class JeuImage {
         this.x = x;
         this.y = y;
         this.img.style.top = this.y+"px";
-        this.img.style.marginLeft = this.x+"px";
+        this.img.style.left = this.x+"px";
     };
 
     deplace(){
@@ -62,6 +62,6 @@ class JeuImage {
 
 }
 
-for (let i = 0; i < 100; i++) {
-    new JeuImage(_cn('img', {src: 'img/Soccerball.svg', width: '100px', height: '100px'}, {}, document.body));
+for (let i = 0; i < 50; i++) {
+    new JeuImage(_cn('img', null, {width: '100px', height: '100px'}, document.body));
 }
