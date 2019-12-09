@@ -13,20 +13,25 @@ function ajax() {
     let req = Xhr();
     req.open("GET", "resources/biblio.xml", false);
     req.send(null);
-    let tableau = _cn('table');
-    let livre = _cn('tr');
     if(req.status !== 200) return;
-    _ce('td',livre).appendChild(_ct('Titre'));
-    _ce('td',livre).appendChild(_ct('Auteur'));
-    _ce('td',livre).appendChild(_ct('Genre'));
-    _ce('td',livre).appendChild(_ct('Editeur'));
-    _ce('td',livre).appendChild(_ct('Disponibilité'));
-    tableau.appendChild(livre);
+
+    /*RECUPERATION DONNEES*/
     let titres = req.responseXML.getElementsByTagName('titre');
     let auteurs = req.responseXML.getElementsByTagName('auteur');
     let genres = req.responseXML.getElementsByTagName('genre');
     let editeurs = req.responseXML.getElementsByTagName('editeur');
     let disponibilites = req.responseXML.getElementsByTagName('disponible');
+
+    /*CREATION TABLEAU, HEADERS, BODY*/
+    let tableau = _ce('table', _('#resultat'));
+    let headers = _ce('thead', tableau);
+    ['Titre', 'Auteur', 'Genre', 'Editeur', 'Disponibilité'].forEach(function (header) {
+        _ce('th',headers).appendChild(_ct(header));
+    });
+    let bodyContainer = _ce('tbody', tableau);
+
+
+    let livre;
     for(let i = 0; i < titres.length; i++) {
         livre = _cn('tr',{},{display: 'none'});
         _ce('td',livre).appendChild(_ct(titres[i].firstChild.data));
@@ -34,10 +39,10 @@ function ajax() {
         _ce('td',livre).appendChild(_ct(genres[i].firstChild.data));
         _ce('td',livre).appendChild(_ct(editeurs[i].firstChild.data));
         _ce('td',livre).appendChild(_ct(disponibilites[i].firstChild.data));
-        tableau.appendChild(livre);
+        bodyContainer.appendChild(livre);
     }
-    _('#resultat').appendChild(tableau);
-    return tableau;
+
+    return bodyContainer;
 }
 
 /**
@@ -69,45 +74,46 @@ function changeDispo() {
 }
 
 function resetDisplay(data) {
-    let start = 1;
+    let start = 0;
     while (start < data.childNodes.length){
         data.childNodes[start].style.display = 'none';
         start++;
     }
 }
 function afficheCache(dispo, nextPagestart) {
-    let cpt = 1;
+    let cpt = Number(nextPagestart);
     let i = nextPagestart;
     previous.style.display = 'none';
     next.style.display = 'none';
 
     resetDisplay(data);
 
-    while ((i < data.childNodes.length) && (cpt <= 10)){
-        if((data.childNodes[i].childNodes[4].firstChild.data !== dispo)){
-            console.log(data.childNodes[i]);
+    while ((i < data.childNodes.length) && (i-cpt < 10)){
+        if(data.childNodes[i].childNodes[4].firstChild.data !== dispo){
             data.childNodes[i].style.display = 'none';
+            ++cpt;
         }else{
             data.childNodes[i].style.display = '';
-            ++cpt;
         }
-        i++;
-    }
-    if(nextPagestart > 9){
-        previous.onclick = function () { afficheCache(dispo, nextPagestart-(i-cpt)); };
-        previous.style.display = 'inline-block';
+        ++i;
     }
 
-    if((cpt > 10) && (cpt <= (data.childNodes.length-(nextPagestart))) ){
-        next.style.display = 'inline-block';
-        next.onclick = function () { afficheCache(dispo, nextPagestart+10+(i-cpt)); };
+    if(nextPagestart > 9){
+        previous.onclick = function () { afficheCache(dispo, nextPagestart-cpt); };
+        previous.style.display = 'inline-block';
     }
+    if((cpt >= nextPagestart) && (data.childNodes.length > (10+nextPagestart)) ){
+        next.style.display = 'inline-block';
+        next.onclick = function () { afficheCache(dispo, nextPagestart+(nextPagestart-cpt)+12); };
+    }
+
     console.log('---DEBUG FIN---');
-    console.log('Suivant   :'+(nextPagestart+10+(i-cpt)));
-    console.log('precedent :'+(nextPagestart-(i-cpt)));
+    console.log('Suivant   :'+(nextPagestart+10+cpt));
+    console.log('precedent :'+(nextPagestart-cpt));
     console.log('cpt       :'+cpt);
     console.log('nextpage  :'+nextPagestart);
     console.log('i         :'+i);
+    console.log('diff      :'+cpt);
     console.log('data.childNodes.length:'+data.childNodes.length);
 }
-afficheCache('oui', 1);
+afficheCache('oui', 0);
