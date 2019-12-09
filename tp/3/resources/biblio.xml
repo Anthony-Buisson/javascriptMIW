@@ -15,7 +15,7 @@
         <disponible>oui</disponible>
     </livre>
     <livre id="3">
-        <titre>Les Miables (T3)</titre>
+        <titre>Les Misérables (T3)</titre>
         <auteur>HUGO Victor</auteur>
         <genre>Roman</genre>
         <editeur>Flammarion</editeur>
@@ -138,7 +138,7 @@
         <auteur>HUGO Victor</auteur>
         <genre>Roman</genre>
         <editeur>Flammarion</editeur>
-        <disponible>oui</disponible>
+        <disponible>non</disponible>
     </livre>
     <livre id="21">
         <titre>Misérables (T21)</titre>

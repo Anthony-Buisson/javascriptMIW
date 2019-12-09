@@ -1,20 +1,20 @@
 /*****************************************************************************************************************/
 /*                                                                                                               */
-/*                                Bibliothèque  MIW   version miw V  18 11 2019.js                               */
-/*                                Réalisée dans le cadre des cours Javascript                                    */
-/*                                De la Licence Mobilité Internet & Web   (MIW)                                  */
+/*                                Bibliothï¿½que  MIW   version miw V  18 11 2019.js                               */
+/*                                Rï¿½alisï¿½e dans le cadre des cours Javascript                                    */
+/*                                De la Licence Mobilitï¿½ Internet & Web   (MIW)                                  */
 /*                                                                                                               */
-/*                                IUT d'Aix-en-Provence Département GEA GAP                                      */
+/*                                IUT d'Aix-en-Provence Dï¿½partement GEA GAP                                      */
 /*                                Site internet de la licence :     www.gap.univ-mrs.fr/miw                      */
 /*                                                                                                               */
 /*****************************************************************************************************************/
 
-(function(){  // ief  ou fie fonction immédiatement exécutée.
+(function(){  // ief  ou fie fonction immï¿½diatement exï¿½cutï¿½e.
 
 	/******************************************************************************************************/
-	/***********************  Les expressions régulières    ***********************************************/
+	/***********************  Les expressions rï¿½guliï¿½res    ***********************************************/
 	/******************************************************************************************************/
-	Reg = {											               // objet contenant des expressions régulières
+	Reg = {											               // objet contenant des expressions rï¿½guliï¿½res
 		required  :  /.+/,
 		alpha     :  /^[a-z ._-]+$/i,
 		alphanum  :  /^[a-z0-9 ._-]+$/i,
@@ -51,7 +51,7 @@
 		if (nodeInsert) nodeInsert.appendChild(e);
 		return e;
 	};
-	_cn = 	function(node,attribut,style,nodeInsert){  // pour créer un noeud avec des attributs et des styles ( attributs et style sont des objets )
+	_cn = 	function(node,attribut,style,nodeInsert){  // pour crï¿½er un noeud avec des attributs et des styles ( attributs et style sont des objets )
 		let n = _ce(node);
 		n.attrib(attribut);
 		n.css(style);
@@ -67,7 +67,7 @@
 	};
 
 	/******************************************************************************************************/
-	/***********************  Gestion fenêtre   ***********************************************************/
+	/***********************  Gestion fenï¿½tre   ***********************************************************/
 	/******************************************************************************************************/
 
 	windowWidth = function(){
@@ -89,9 +89,9 @@
 	};
 
 	/******************************************************************************************************/
-	/*************   Raccourci pour parcourir et traiter les propriétés d'un objet  ***********************/
+	/*************   Raccourci pour parcourir et traiter les propriï¿½tï¿½s d'un objet  ***********************/
 	/******************************************************************************************************/
-	_each = function(o,f){                            // f est une fonction Callback c a d une  fonction qui sera définie au moment de l'appel de la fonction _each
+	_each = function(o,f){                            // f est une fonction Callback c a d une  fonction qui sera dï¿½finie au moment de l'appel de la fonction _each
 		for (let i in o){f(i,o[i])}
 	};
 	/******************************************************************************************************/
@@ -137,7 +137,7 @@
 			this.id = val;
 			return this;
 		},
-		css 	: 	function(obj) {          // permet d'affecter au noeud les propriétés de style contenues dans l'objet obj
+		css 	: 	function(obj) {          // permet d'affecter au noeud les propriï¿½tï¿½s de style contenues dans l'objet obj
 			for( let i in obj ){
 				this.style[i] = obj[i];
 			};
@@ -167,16 +167,16 @@
 	/******************************************************************************************************/
 	/***********************  Ajax    ***********************************************/
 	/******************************************************************************************************/
-	function Xhr(){                // création d'un requete HTTP en fonction du navigateur
+	Xhr = function(){                // crï¿½ation d'un requete HTTP en fonction du navigateur
 		let obj = null;
 		try { obj = new ActiveXObject("Microsoft.XMLHTTP");}
 		catch(Error) { try { obj = new ActiveXObject("MSXML2.XMLHTTP");}
 		catch(Error) { try { obj = new XMLHttpRequest();}
-		catch(Error) { alert(' Impossible de créer l\'objet XMLHttpRequest')}
+		catch(Error) { alert(' Impossible de crï¿½er l\'objet XMLHttpRequest')}
 		}
 		}
 		return obj;
-	}
+	};
 
 
 	/***********************  Array prototypes    ***********************************************/
@@ -185,13 +185,13 @@
 			throw ('Erreur, tableau vide');
 		}
 		if(parseFloat(this[0]) != this[0]){
-			throw ('Erreur, valeur non numérique');
+			throw ('Erreur, valeur non numï¿½rique');
 		}
 		let max = parseFloat(this[0]);
 		this.forEach(function (el) {
 			let floatValue = parseFloat(el);
 			if(floatValue != el){
-				throw ('Erreur, valeur non numérique');
+				throw ('Erreur, valeur non numï¿½rique');
 			}
 			if(floatValue > max) max = floatValue;
 		});
@@ -202,13 +202,13 @@
 			throw ('Erreur, tableau vide');
 		}
 		if(parseFloat(this[0]) != this[0]){
-			throw ('Erreur, valeur non numérique');
+			throw ('Erreur, valeur non numï¿½rique');
 		}
 		let min = parseFloat(this[0]);
 		this.forEach(function (el) {
 			let floatValue = parseFloat(el);
 			if(floatValue != el){
-				throw ('Erreur, valeur non numérique');
+				throw ('Erreur, valeur non numï¿½rique');
 			}
 			if(floatValue < min) min = floatValue;
 		});
@@ -222,7 +222,7 @@
 		this.forEach(function (el) {
 			let floatValue = parseFloat(el);
 			if(floatValue != el){
-				throw ('Erreur, valeur non numérique');
+				throw ('Erreur, valeur non numï¿½rique');
 			}
 			sum+=floatValue;
 		});
