@@ -1,4 +1,4 @@
-let Marques = [
+[
     {"code_marque":"PG","nom_marque":"Peugeot"},
     {"code_marque":"FT","nom_marque":"Fiat"},
     {"code_marque":"RN","nom_marque":"Renault"},

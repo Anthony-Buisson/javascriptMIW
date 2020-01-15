@@ -1,4 +1,4 @@
-let Voitures = [
+[
     {"ref_voiture":"3008GLD10","nom_modele":" 3008 GT Line Diesel", "code_marque":"PG" },
     {"ref_voiture":"500E05","nom_modele":" 500 Essence", "code_marque":"FT"},
     {"ref_voiture":"CaptureD35","nom_modele":" Capture Diésel", "code_marque":"RN"},
