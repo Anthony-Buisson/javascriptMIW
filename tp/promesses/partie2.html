@@ -7,12 +7,66 @@
     <title>Tp promesses - partie 2</title>
 </head>
 <body>
-    
+    <div class="form">
+        <input id="refAchat" type="text">
+    </div>
+    <div class="result">
+        <div class="date_achat"></div>
+        <div class="montant_achat"></div>
+        <div class="ref_voiture"></div>
+        <div class="nom_modele"></div>
+        <div class="code_marque"></div>
+        <div class="nom_marque"></div>
+    </div>
 </body>
-<script src="JS/Achat.js"></script>
-<script src="JS/Voiture.js"></script>
-<script src="JS/Marque.js"></script>
 <script src="JS/bibliAjax2.js"></script>
 <script>
+    document.querySelector('#refAchat').onblur = ()=> $get('JS/Achat.js',null)
+        .then(remplirChampsAchat)
+        .then(remplirChampsVoiture)
+        .then(remplirChampsMarque)
+        .catch((e)=>{ console.log('erreur')});
+    
+    function remplirChampsAchat(response){
+        clearPage();
+        let refEstValide = false;
+        JSON.parse(response.responseText).forEach(achat => {
+            if(achat.ref_achat == document.querySelector('#refAchat').value){
+                refEstValide = true;
+                document.querySelector('.date_achat').innerHTML = achat.date_achat;
+                document.querySelector('.montant_achat').innerHTML = achat.montant_achat;
+                document.querySelector('.ref_voiture').innerHTML = achat.ref_voiture;
+            }
+        });
+        if(!refEstValide) document.querySelector('.date_achat').innerHTML = 'Pas de résultat';
+        else{ $get('JS/Voiture.js',null).then(remplirChampsVoiture).catch((e)=>{ console.log('erreur')}) }
+    }
+    
+    function remplirChampsVoiture(response){
+        JSON.parse(response.responseText).forEach(voiture => {
+            if(voiture.ref_voiture == document.querySelector('.ref_voiture').innerHTML){
+                document.querySelector('.nom_modele').innerHTML = voiture.nom_modele;
+                document.querySelector('.code_marque').innerHTML = voiture.code_marque;
+            }
+        });
+        $get('JS/Marque.js',null).then(remplirChampsMarque).catch((e)=>{ console.log('erreur')});
+    }
+    
+    function remplirChampsMarque(response){
+        JSON.parse(response.responseText).forEach(marque => {
+            if(marque.code_marque == document.querySelector('.code_marque').innerHTML){
+                document.querySelector('.nom_marque').innerHTML = marque.nom_marque;
+            }
+        });
+    }
+
+    function clearPage(){
+        document.querySelector('.date_achat').innerHTML = '';
+        document.querySelector('.montant_achat').innerHTML = '';
+        document.querySelector('.ref_voiture').innerHTML = '';
+        document.querySelector('.nom_modele').innerHTML = '';
+        document.querySelector('.code_marque').innerHTML = '';
+        document.querySelector('.nom_marque').innerHTML = '';
+    }
 </script>
 </html>
