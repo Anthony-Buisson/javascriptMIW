@@ -1,5 +1,7 @@
 cl=(data)=>{return console.log(data)};
 
+setHTML=(node,html)=>{return document.querySelector(node).innerHTML = html};
+
 $get=(url,data)=> {
   return new Promise( (resolve, reject) =>{
 	let getUrl=(objet)=>{ 

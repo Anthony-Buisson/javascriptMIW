@@ -7,75 +7,57 @@
     <title>Tp promesses - partie 2</title>
 </head>
 <body>
-    <div class="form">
-        <input id="refAchat" type="text">
-    </div>
-    <div class="result">
-        <div class="date_achat"></div>
-        <div class="montant_achat"></div>
-        <div class="ref_voiture"></div>
-        <div class="nom_modele"></div>
-        <div class="code_marque"></div>
-        <div class="nom_marque"></div>
-    </div>
+<div class="form">
+    <input id="refAchat" type="text">
+</div>
+<div class="result">
+    <div class="date_achat"></div>
+    <div class="montant_achat"></div>
+    <div class="ref_voiture"></div>
+    <div class="nom_modele"></div>
+    <div class="code_marque"></div>
+    <div class="nom_marque"></div>
+</div>
 </body>
 <script src="JS/bibliAjax2.js"></script>
 <script>
-    document.querySelector('#refAchat').onblur = remplirChamps;
-    
-    function remplirChampsAchat(response){
-        clearPage();
-        let refEstValide = false;
-        JSON.parse(response.responseText).forEach(achat => {
-            if(achat.ref_achat == document.querySelector('#refAchat').value){
-                refEstValide = true;
-                document.querySelector('.date_achat').innerHTML = achat.date_achat;
-                document.querySelector('.montant_achat').innerHTML = achat.montant_achat;
-                document.querySelector('.ref_voiture').innerHTML = achat.ref_voiture;
-            }
-        });
-        if(!refEstValide) document.querySelector('.date_achat').innerHTML = 'Pas de résultat';
-        else{ $get('JS/Voiture.js',null).then(remplirChampsVoiture).catch((e)=>{ console.log('erreur')}) }
-    }
-    
-    function remplirChampsVoiture(response){
-        JSON.parse(response.responseText).forEach(voiture => {
-            if(voiture.ref_voiture == document.querySelector('.ref_voiture').innerHTML){
-                document.querySelector('.nom_modele').innerHTML = voiture.nom_modele;
-                document.querySelector('.code_marque').innerHTML = voiture.code_marque;
-            }
-        });
-        $get('JS/Marque.js',null).then(remplirChampsMarque).catch((e)=>{ console.log('erreur')});
-    }
+    setHTML=(node,html)=>{return document.querySelector(node).innerHTML = html};
 
-    function clearPage(){
-        document.querySelector('.date_achat').innerHTML = '';
-        document.querySelector('.montant_achat').innerHTML = '';
-        document.querySelector('.ref_voiture').innerHTML = '';
-        document.querySelector('.nom_modele').innerHTML = '';
-        document.querySelector('.code_marque').innerHTML = '';
-        document.querySelector('.nom_marque').innerHTML = '';
-    }
+    document.querySelector('#refAchat').onkeyup = remplirChamps;
+    document.querySelector('#refAchat').onblur = remplirChamps;
 
     async function remplirChamps(){
-        try{
-            clearPage ();
+        if(event.type === 'keyup' && event.key !== 'Enter') return;
+        else document.querySelectorAll('.result *').forEach(champ=> champ.innerHTML = '');
 
+        try{
             const Achats = JSON.parse((await $get('JS/Achat.js',null)).responseText);
             const Voitures = JSON.parse((await $get('JS/Voiture.js',null)).responseText);
             const Marques = JSON.parse((await $get('JS/Marque.js',null)).responseText);
-            console.log(Achats);
+
+            let refEstValide = false;
+            Achats.forEach(achat => {
+                if(achat.ref_achat == document.querySelector('#refAchat').value){
+                    refEstValide = true;
+                    setHTML('.date_achat', achat.date_achat);
+                    setHTML('.montant_achat',achat.montant_achat);
+                    setHTML('.ref_voiture',achat.ref_voiture);
+                }
+            });
+            if(!refEstValide) setHTML('.date_achat', 'Aucun résultat');
+
+            Voitures.forEach(voiture => {
+                if(voiture.ref_voiture == document.querySelector('.ref_voiture').innerHTML){
+                    setHTML('.nom_modele',voiture.nom_modele);
+                    setHTML('.code_marque',voiture.code_marque);
+                }
+            });
 
             Marques.forEach(marque => {
-            if(marque.code_marque == document.querySelector('.code_marque').innerHTML){
-                document.querySelector('.nom_marque').innerHTML = marque.nom_marque;
-            }
-        });
+                if(marque.code_marque == document.querySelector('.code_marque').innerHTML) setHTML('.nom_marque',marque.nom_marque);
+            });
 
-
-        }catch(e){
-            console.log('erreur : '+e);
-        }
+        }catch(e){ cl('Erreur : '+e) }
     }
 </script>
 </html>
