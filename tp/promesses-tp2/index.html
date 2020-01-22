@@ -8,15 +8,15 @@
 </head>
 <body>
 <div class="form">
-    <input id="refAchat" type="text">
+    <label for="refAchat">Référence de l'achat </label><input id="refAchat" type="text">
 </div>
-<div class="result">
-    <div class="date_achat"></div>
-    <div class="montant_achat"></div>
-    <div class="ref_voiture"></div>
-    <div class="nom_modele"></div>
-    <div class="code_marque"></div>
-    <div class="nom_marque"></div>
+<div>
+    <b>Date d'achat :       </b><span class="info date_achat"></span><br>
+    <b>Montant de l'achat : </b><span class="info montant_achat"></span><br>
+    <b>Réf de la voiture :  </b><span class="info ref_voiture"></span><br>
+    <b>Nom du modèle :      </b><span class="info nom_modele"></span><br>
+    <b>Code de la marque :  </b><span class="info code_marque"></span><br>
+    <b>Nom de la marque :   </b><span class="info nom_marque"></span><br>
 </div>
 </body>
 <script>
@@ -27,7 +27,7 @@
 
     async function remplirChamps(){
         if(event.type === 'keyup' && event.key !== 'Enter') return;
-        else document.querySelectorAll('.result *').forEach(champ=> champ.innerHTML = '');
+        else document.querySelectorAll('.info').forEach(champ=> champ.innerHTML = '');
 
         try{
             let Achats = await fetch('JS/Achat.js',null);
@@ -41,7 +41,7 @@
                 .filter(achat => achat.ref_achat == document.querySelector('#refAchat').value );
             if(res_achat.length > 0){
                 setHTML('.date_achat', res_achat[0].date_achat);
-                setHTML('.montant_achat',res_achat[0].montant_achat);
+                setHTML('.montant_achat',res_achat[0].montant_achat+' €');
                 setHTML('.ref_voiture',res_achat[0].ref_voiture);
             } else {
                 setHTML('.date_achat', 'Aucun résultat');
@@ -57,7 +57,8 @@
                 .filter(marque => marque.code_marque == document.querySelector('.code_marque').innerHTML );
             setHTML('.nom_marque',res_marque[0].nom_marque);
 
-        }catch(e){ cl('Erreur : '+e) }
+        }
+        catch(e){ console.log('Erreur : '+e) }
     }
 </script>
 </html>
