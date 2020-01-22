@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tp promesses - partie 2</title>
+</head>
+<body>
+<div class="form">
+    <input id="refAchat" type="text">
+</div>
+<div class="result">
+    <div class="date_achat"></div>
+    <div class="montant_achat"></div>
+    <div class="ref_voiture"></div>
+    <div class="nom_modele"></div>
+    <div class="code_marque"></div>
+    <div class="nom_marque"></div>
+</div>
+</body>
+<!--<script src="JS/bibliAjax2.js"></script>-->
+<script>
+    setHTML=(node,html)=>{return document.querySelector(node).innerHTML = html};
+
+    document.querySelector('#refAchat').onblur = ()=> fetch('JS/Achat.js',null).then(response=>{
+            document.querySelectorAll('.result *').forEach(champ=> champ.innerHTML = '');
+            let refEstValide = false;
+            response.json().then((data)=> {
+                data.forEach(achat => {
+                    if (achat.ref_achat == document.querySelector('#refAchat').value) {
+                        refEstValide = true;
+                        setHTML('.date_achat', achat.date_achat);
+                        setHTML('.montant_achat',achat.montant_achat+' €');
+                        setHTML('.ref_voiture',achat.ref_voiture);
+                    }
+                });
+                if(!refEstValide) setHTML('.date_achat', 'Aucun résultat');
+                else {
+                    fetch('JS/Voiture.js', null).then(function(response) {
+                            response.json().then((data) => {
+                                data.forEach(voiture => {
+                                    if (voiture.ref_voiture == document.querySelector('.ref_voiture').innerHTML) {
+                                        setHTML('.nom_modele',voiture.nom_modele);
+                                        setHTML('.code_marque',voiture.code_marque);
+                                    }
+                                })
+                            });
+                            fetch('JS/Marque.js', null).then(function(response) {
+                                response.json().then((data) => {
+                                    data.forEach(marque => {
+                                        if (marque.code_marque == document.querySelector('.code_marque').innerHTML)
+                                            setHTML('.nom_marque', marque.nom_marque);
+                                    });
+                                })
+                            })
+                        })
+                        .catch((e)=>{ console.log('Erreur')});
+                }
+            });
+        })
+        .catch((e)=>{ console.log(e)});
+</script>
+</html>
