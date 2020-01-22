@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tp promesses - partie 2</title>
+    <title>Tp - utilisation async await</title>
 </head>
 <body>
 <div class="form">
@@ -19,7 +19,6 @@
     <div class="nom_marque"></div>
 </div>
 </body>
-<script src="JS/bibliAjax2.js"></script>
 <script>
     setHTML=(node,html)=>{return document.querySelector(node).innerHTML = html};
 
@@ -31,31 +30,32 @@
         else document.querySelectorAll('.result *').forEach(champ=> champ.innerHTML = '');
 
         try{
-            const Achats = JSON.parse((await $get('JS/Achat.js',null)).responseText);
-            const Voitures = JSON.parse((await $get('JS/Voiture.js',null)).responseText);
-            const Marques = JSON.parse((await $get('JS/Marque.js',null)).responseText);
+            let Achats = await fetch('JS/Achat.js',null);
+                Achats = await Achats.json();
+            let Voitures = await fetch('JS/Voiture.js',null);
+                Voitures = await Voitures.json();
+            let Marques = await fetch('JS/Marque.js',null);
+                Marques = await Marques.json();
 
-            let refEstValide = false;
-            Achats.forEach(achat => {
-                if(achat.ref_achat == document.querySelector('#refAchat').value){
-                    refEstValide = true;
-                    setHTML('.date_achat', achat.date_achat);
-                    setHTML('.montant_achat',achat.montant_achat);
-                    setHTML('.ref_voiture',achat.ref_voiture);
-                }
-            });
-            if(!refEstValide) setHTML('.date_achat', 'Aucun résultat');
+            let res_achat = Achats
+                .filter(achat => achat.ref_achat == document.querySelector('#refAchat').value );
+            if(res_achat.length > 0){
+                setHTML('.date_achat', res_achat[0].date_achat);
+                setHTML('.montant_achat',res_achat[0].montant_achat);
+                setHTML('.ref_voiture',res_achat[0].ref_voiture);
+            } else {
+                setHTML('.date_achat', 'Aucun résultat');
+                return;
+            }
 
-            Voitures.forEach(voiture => {
-                if(voiture.ref_voiture == document.querySelector('.ref_voiture').innerHTML){
-                    setHTML('.nom_modele',voiture.nom_modele);
-                    setHTML('.code_marque',voiture.code_marque);
-                }
-            });
+            let res_voiture = Voitures
+                .filter(voiture => voiture.ref_voiture == document.querySelector('.ref_voiture').innerHTML );
+            setHTML('.nom_modele',res_voiture[0].nom_modele);
+            setHTML('.code_marque',res_voiture[0].code_marque);
 
-            Marques.forEach(marque => {
-                if(marque.code_marque == document.querySelector('.code_marque').innerHTML) setHTML('.nom_marque',marque.nom_marque);
-            });
+            let res_marque = Marques
+                .filter(marque => marque.code_marque == document.querySelector('.code_marque').innerHTML );
+            setHTML('.nom_marque',res_marque[0].nom_marque);
 
         }catch(e){ cl('Erreur : '+e) }
     }
