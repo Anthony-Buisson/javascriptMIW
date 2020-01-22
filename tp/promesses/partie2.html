@@ -23,12 +23,10 @@
 <script>
     document.querySelector('#refAchat').onblur = ()=> $get('JS/Achat.js',null)
         .then(remplirChampsAchat)
-        .then(remplirChampsVoiture)
-        .then(remplirChampsMarque)
         .catch((e)=>{ console.log('erreur')});
     
     function remplirChampsAchat(response){
-        clearPage();
+        document.querySelectorAll('.result *').forEach(champ=> champ.innerHTML = '');
         let refEstValide = false;
         JSON.parse(response.responseText).forEach(achat => {
             if(achat.ref_achat == document.querySelector('#refAchat').value){
@@ -58,15 +56,6 @@
                 document.querySelector('.nom_marque').innerHTML = marque.nom_marque;
             }
         });
-    }
-
-    function clearPage(){
-        document.querySelector('.date_achat').innerHTML = '';
-        document.querySelector('.montant_achat').innerHTML = '';
-        document.querySelector('.ref_voiture').innerHTML = '';
-        document.querySelector('.nom_modele').innerHTML = '';
-        document.querySelector('.code_marque').innerHTML = '';
-        document.querySelector('.nom_marque').innerHTML = '';
     }
 </script>
 </html>
