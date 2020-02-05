@@ -8,15 +8,16 @@ class Morpion {
         this.canvas.onclick = this.jouerCoup;
         this.ctx = this.canvas.getContext('2d');
 
-        this.img = document.createElement('img');
-        this.img.id = 'img';
-        this.img.src = 'images/'+random(1,4)+'.png';
-        this.img.display = 'none';
-
         this.initialiserControles();
         this.dessinerGrille();
-        this.initialiserValeurs();
-
+        if(!this.recupererAnciennePartie()){
+            this.creerNouvelleSauvegarde();
+        }else if(this.gagnant){
+            if(this.nbCoups === 24 ) this.finPartie('Égalité !');
+            else { this.finPartie((this.tourRond ? this.joueur1 : this.joueur2)+' gagne !'); }
+        }
+        this.labelJ1.innerHTML = 'Joueur 1 ('+this.resultats[0]+' victoires) : ';
+        this.labelJ2.innerHTML = 'Joueur 2 ('+this.resultats[1]+' victoires) : ';
     };
 
     initialiserValeurs = ()=>{
@@ -29,6 +30,66 @@ class Morpion {
         ];
         this.tourRond = false;
         this.nbCoups = 0;
+    };
+
+    recupererAnciennePartie = ()=>{
+        console.log('test');
+        let historiquePartie = JSON.parse(localStorage.getItem('morpion'));
+        if(!historiquePartie) return false;
+        this.resultats = historiquePartie.resultats;
+        this.grille = historiquePartie.parties[historiquePartie.parties.length-1].grille;
+        this.tourRond = historiquePartie.parties[historiquePartie.parties.length-1].tourRond;
+        this.nbCoups = historiquePartie.parties[historiquePartie.parties.length-1].nbCoups;
+        this.parties = historiquePartie.parties;
+        this.nbCoups = historiquePartie.parties[historiquePartie.parties.length-1].nbCoups;
+        this.gagnant = historiquePartie.parties[historiquePartie.parties.length-1].gagnant;
+        this.joueur1 = historiquePartie.parties[historiquePartie.parties.length-1].joueur1;
+        this.joueur2 = historiquePartie.parties[historiquePartie.parties.length-1].joueur2;
+        for (let i = 0; i < this.grille.length; i++) {
+            for (let j = 0; j < this.grille.length; j++) {
+                if(this.grille[i][j] !== 0) this.ajouterJeton(j* 102 + 51,i* 102 + 51, this.grille[i][j] < 0);
+            }
+        }
+        return true;
+    };
+
+    mettreAJourPartie = ()=>{
+        console.log(this.parties);
+        this.parties[this.parties.length-1] = {
+            grille: this.grille,
+            tourRond: this.tourRond,
+            nbCoups: this.nbCoups,
+            joueur1: this.inputJ1.value,
+            joueur2: this.inputJ2.value,
+            gagnant: this.gagnant,
+        };
+        localStorage.setItem('morpion', JSON.stringify({
+            resultats: this.resultats,
+            parties: this.parties
+        }));
+    };
+
+    creerNouvelleSauvegarde = ()=>{
+        this.grille = [
+            [0,0,0,0,0],
+            [0,0,0,0,0],
+            [0,0,0,0,0],
+            [0,0,0,0,0],
+            [0,0,0,0,0],
+        ];
+        this.resultats = [0,0,0];
+        this.tourRond = false;
+        this.nbCoups = 0;
+        this.parties = [{
+            grille: this.grille,
+            tourRond: this.tourRond,
+            nbCoups: this.nbCoups,
+            joueur1: this.inputJ1.value,
+            joueur2: this.inputJ2.value,
+            gagnant: false
+        }];
+        console.log(this.parties);
+        this.mettreAJourPartie();
     };
 
     initialiserControles = ()=>{
@@ -115,29 +176,37 @@ class Morpion {
             this.ajouterJeton(coordX * 102 + 51, coordY * 102 + 51);
             this.grille[coordY][coordX] = this.tourRond ? -1 : 1;
             this.tourRond = !this.tourRond;
+            this.mettreAJourPartie();
             if (this.verifierFin()){
+                // this.stockerPartie(0);
+                if(this.tourRond){
+                    this.resultats[0]++;
+                }else{
+                    this.resultats[1]++;
+                }
                 this.finPartie((this.tourRond ? this.inputJ1.value : this.inputJ2.value)+' gagne !');
                 return;
             }
             else if(this.nbCoups === 24) {
+                this.resultats[2]++;
                 this.finPartie('Egalité !');
                 return;
             }
             else { this.nbCoups++; }
-            if((this.bot && this.tourRond && this.nbCoups < 25) || (this.debug) )this.jouerCoup();
+            if((this.bot && this.tourRond && this.nbCoups < this.grille.length*this.grille.length) || (this.debug) )this.jouerCoup();
         }
         else if(!evt){
             this.jouerCoup();
         }
     };
 
-    ajouterJeton = (x,y)=>{
+    ajouterJeton = (x,y, tourRond = this.tourRond)=>{
         this.ctx.strokeStyle = "black";
         this.ctx.lineWidth = 10;
         this.ctx.globalAlpha = 1;
         this.ctx.lineJoin = 'round';
         this.ctx.beginPath();
-        if(this.tourRond) {
+        if(tourRond) {
             this.ctx.arc(x, y, 30, 0, Math.PI*2);
         }
         else{
@@ -177,6 +246,10 @@ class Morpion {
     };
 
     finPartie(message = null){
+        this.gagnant = true;
+        this.labelJ1.innerHTML = 'Joueur 1 ('+this.resultats[0]+' victoires) : ';
+        this.labelJ2.innerHTML = 'Joueur 2 ('+this.resultats[1]+' victoires) : ';
+        this.mettreAJourPartie();
         if(message) {
             this.ctx.fillStyle = 'rgba(200,200,200,0.9)';
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -184,16 +257,10 @@ class Morpion {
             this.ctx.fillStyle = "red";
             this.ctx.textAlign = "center";
 
-            if(random(0,25) !== 4)
-                this.ctx.fillText(message, this.canvas.width / 2, this.canvas.height / 2);
-            else{
-                this.ctx.fillText(message, this.canvas.width / 2, 40);
-                this.ctx.drawImage(this.img,0, 60);
-            }
+            this.ctx.fillText(message, this.canvas.width / 2, this.canvas.height / 2);
 
             this.ctx.font = "30px Comic Sans MS";
             this.ctx.fillStyle = "black";
-            this.ctx.textAlign = "center";
             this.ctx.fillText('Cliquer pour recommencer', this.canvas.width / 2, this.canvas.height-20);
             this.canvas.onclick = ()=>this.finPartie();
 
