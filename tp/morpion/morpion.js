@@ -4,20 +4,14 @@ class Morpion {
 
     constructor(){
         this.canvas = document.querySelector('#morpionZone');
-        this.canvas.style.display = 'inline-block';
         this.canvas.onclick = this.jouerCoup;
         this.ctx = this.canvas.getContext('2d');
 
         this.initialiserControles();
         this.dessinerGrille();
-        if(!this.recupererAnciennePartie()){
-            this.creerNouvelleSauvegarde();
-        }else if(this.gagnant){
-            if(this.nbCoups === 24 ) this.finPartie('Égalité !');
-            else { this.finPartie((this.tourRond ? this.joueur1 : this.joueur2)+' gagne !'); }
-        }
-        this.labelJ1.innerHTML = 'Joueur 1 ('+this.resultats[0]+' victoires) : ';
-        this.labelJ2.innerHTML = 'Joueur 2 ('+this.resultats[1]+' victoires) : ';
+        if(!this.recupererAnciennePartie()) this.creerNouvelleSauvegarde();
+        this.labelJ1.innerHTML = `Joueur 1 (${this.resultats[0]} victoires)${this.tourRond ? '' : '>>>>'}`;
+        this.labelJ2.innerHTML = `Joueur 2 (${this.resultats[1]} victoires)${this.tourRond ? '>>>>' : ''}`;
     };
 
     initialiserValeurs = ()=>{
@@ -30,10 +24,26 @@ class Morpion {
         ];
         this.tourRond = false;
         this.nbCoups = 0;
+        this.gagnant = false;
+    };
+
+    reinitialiserPartie = ()=>{
+        localStorage.clear();
+        this.creerNouvelleSauvegarde();
+        this.dessinerGrille();
+        this.labelJ1.innerHTML = `Joueur 1 (${this.resultats[0]} victoires)${this.tourRond ? '' : '>>>>'}`;
+        this.labelJ2.innerHTML = `Joueur 2 (${this.resultats[1]} victoires)${this.tourRond ? '>>>>' : ''}`;
+    };
+
+    reinitialiserGrille = ()=>{
+        this.initialiserValeurs();
+        this.mettreAJourPartie();
+        this.dessinerGrille();
+        this.labelJ1.innerHTML = `Joueur 1 (${this.resultats[0]} victoires)${this.tourRond ? '' : '>>>>'}`;
+        this.labelJ2.innerHTML = `Joueur 2 (${this.resultats[1]} victoires)${this.tourRond ? '>>>>' : ''}`;
     };
 
     recupererAnciennePartie = ()=>{
-        console.log('test');
         let historiquePartie = JSON.parse(localStorage.getItem('morpion'));
         if(!historiquePartie) return false;
         this.resultats = historiquePartie.resultats;
@@ -53,8 +63,11 @@ class Morpion {
         return true;
     };
 
+    /**
+     * Met à jour le localStorage
+     * (utilisée à chaque coup valide)
+     */
     mettreAJourPartie = ()=>{
-        console.log(this.parties);
         this.parties[this.parties.length-1] = {
             grille: this.grille,
             tourRond: this.tourRond,
@@ -69,17 +82,13 @@ class Morpion {
         }));
     };
 
+    /**
+     * Crée une partie et la sauvegarde en localStorage
+     * (utilisée lorsqu'il n'y a pas de parties en localstorage)
+     */
     creerNouvelleSauvegarde = ()=>{
-        this.grille = [
-            [0,0,0,0,0],
-            [0,0,0,0,0],
-            [0,0,0,0,0],
-            [0,0,0,0,0],
-            [0,0,0,0,0],
-        ];
         this.resultats = [0,0,0];
-        this.tourRond = false;
-        this.nbCoups = 0;
+        this.initialiserValeurs();
         this.parties = [{
             grille: this.grille,
             tourRond: this.tourRond,
@@ -88,10 +97,16 @@ class Morpion {
             joueur2: this.inputJ2.value,
             gagnant: false
         }];
-        console.log(this.parties);
         this.mettreAJourPartie();
     };
 
+    /**
+     * Méthode pour créer le panneau de controle :
+     *  - noms des joueurs
+     *  - réinitialisation de la grille ou de la partie
+     *  - Possibilite de jouer automatiquement le tour des ronds (joueur 2 auto)
+     *  - Possibilite de remplir la grille en un clic (partie auto)
+     */
     initialiserControles = ()=>{
         this.labelJ1 = document.createElement('label');
         this.labelJ1.innerHTML = 'Joueur 1 : ';
@@ -127,25 +142,34 @@ class Morpion {
         this.boutonDebug.setAttribute('type', 'checkbox');
         this.boutonDebug.onchange = el => this.debug = el.target.checked;
 
+        this.boutonReinitialiserGrille = document.createElement('button');
+        this.boutonReinitialiserGrille.innerHTML = 'Réinitialiser la grille';
+        this.boutonReinitialiserGrille.onclick = this.reinitialiserGrille;
+
+        this.boutonReinitialiserPartie = document.createElement('button');
+        this.boutonReinitialiserPartie.innerHTML = 'Réinitialiser la partie';
+        this.boutonReinitialiserPartie.onclick = this.reinitialiserPartie;
+
         this.bot = this.boutonBot.checked;
         this.debug = this.boutonDebug.checked;
 
-        this.controlsPanel = document.createElement('span');
-        this.controlsPanel.style.display = 'inline-block';
+        this.controlsPanel = document.createElement('fieldset');
+        this.controlsPanel.style.height = 'fit-content';
 
-        this.controlsPanel.append(this.labelJ1);
-        this.controlsPanel.append(this.inputJ1);
-        this.controlsPanel.append(document.createElement('br'));
-        this.controlsPanel.append(this.labelJ2);
-        this.controlsPanel.append(this.inputJ2);
-        this.controlsPanel.append(document.createElement('br'));
-        this.controlsPanel.append(this.labelBot);
-        this.controlsPanel.append(this.boutonBot);
-        this.controlsPanel.append(document.createElement('br'));
-        this.controlsPanel.append(this.labelDebug);
-        this.controlsPanel.append(this.boutonDebug);
+        this.controlsPanelLegend = document.createElement('legend');
+        this.controlsPanelLegend.innerHTML = 'Morpion 5x5';
+
+        this.controlsPanel.append(this.controlsPanelLegend);
+        this.controlsPanel.append(this.labelJ1, document.createElement('br'), this.inputJ1, document.createElement('br'));
+        this.controlsPanel.append(this.labelJ2, document.createElement('br'), this.inputJ2, document.createElement('br'));
+        this.controlsPanel.append(this.labelBot, this.boutonBot, document.createElement('br'));
+        this.controlsPanel.append(this.labelDebug, this.boutonDebug, document.createElement('br'));
+        this.controlsPanel.append(this.boutonReinitialiserGrille, this.boutonReinitialiserPartie);
 
         document.body.append(this.controlsPanel);
+        document.body.style.display = 'flex';
+        document.body.style.alignItems = 'center';
+        document.body.style.justifyContent = 'space-around';
     };
 
     dessinerGrille = ()=>{
@@ -162,28 +186,25 @@ class Morpion {
         this.ctx.closePath();
     };
 
+    /**
+     * Méthode appellée à chaque coup joué
+     * (par le joueur ou un bot)
+     * @param evt
+     */
     jouerCoup = (evt)=>{
-        let coordX, coordY;
-        if(!evt){
-            coordX = random(0, this.grille.length-1);
-            coordY = random(0, this.grille.length-1);
-        }else {
-            coordX = Math.trunc(evt.layerX / 102);
-            coordY = Math.trunc(evt.layerY / 102);
-        }
+        let coordX = evt ? Math.trunc(evt.layerX / 102) : random(0, this.grille.length-1);
+        let coordY = evt ? Math.trunc(evt.layerY / 102) : random(0, this.grille.length-1);
 
+        /*Le coup est valide*/
         if(this.grille[coordY][coordX] === 0) {
             this.ajouterJeton(coordX * 102 + 51, coordY * 102 + 51);
             this.grille[coordY][coordX] = this.tourRond ? -1 : 1;
             this.tourRond = !this.tourRond;
+            this.labelJ1.innerHTML = `Joueur 1 (${this.resultats[0]} victoires)${this.tourRond ? '' : '>>>>'}`;
+            this.labelJ2.innerHTML = `Joueur 2 (${this.resultats[1]} victoires)${this.tourRond ? '>>>>' : ''}`;
             this.mettreAJourPartie();
             if (this.verifierFin()){
-                // this.stockerPartie(0);
-                if(this.tourRond){
-                    this.resultats[0]++;
-                }else{
-                    this.resultats[1]++;
-                }
+                (this.tourRond) ? this.resultats[0]++ : this.resultats[1]++;
                 this.finPartie((this.tourRond ? this.inputJ1.value : this.inputJ2.value)+' gagne !');
                 return;
             }
@@ -192,12 +213,12 @@ class Morpion {
                 this.finPartie('Egalité !');
                 return;
             }
-            else { this.nbCoups++; }
+            else this.nbCoups++;
             if((this.bot && this.tourRond && this.nbCoups < this.grille.length*this.grille.length) || (this.debug) )this.jouerCoup();
         }
-        else if(!evt){
+        /*Le coup n'est pas valide : le bot rejoue et le joueur doit recliquer*/
+        else if(!evt)
             this.jouerCoup();
-        }
     };
 
     ajouterJeton = (x,y, tourRond = this.tourRond)=>{
@@ -206,9 +227,8 @@ class Morpion {
         this.ctx.globalAlpha = 1;
         this.ctx.lineJoin = 'round';
         this.ctx.beginPath();
-        if(tourRond) {
+        if(tourRond)
             this.ctx.arc(x, y, 30, 0, Math.PI*2);
-        }
         else{
             this.ctx.moveTo(x-34, y-34);
             this.ctx.lineTo(x+34, y+34);
@@ -249,27 +269,34 @@ class Morpion {
         this.gagnant = true;
         this.labelJ1.innerHTML = 'Joueur 1 ('+this.resultats[0]+' victoires) : ';
         this.labelJ2.innerHTML = 'Joueur 2 ('+this.resultats[1]+' victoires) : ';
-        this.mettreAJourPartie();
         if(message) {
             this.ctx.fillStyle = 'rgba(200,200,200,0.9)';
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
             this.ctx.font = "50px Comic Sans MS";
             this.ctx.fillStyle = "red";
             this.ctx.textAlign = "center";
-
             this.ctx.fillText(message, this.canvas.width / 2, this.canvas.height / 2);
 
             this.ctx.font = "30px Comic Sans MS";
             this.ctx.fillStyle = "black";
             this.ctx.fillText('Cliquer pour recommencer', this.canvas.width / 2, this.canvas.height-20);
-            this.canvas.onclick = ()=>this.finPartie();
 
-        }else{
             this.initialiserValeurs();
+            this.parties.push( {
+                grille: this.grille,
+                tourRond: this.tourRond,
+                nbCoups: this.nbCoups,
+                joueur1: this.inputJ1.value,
+                joueur2: this.inputJ2.value,
+                gagnant: false
+            });
+            this.mettreAJourPartie();
+            this.canvas.onclick = ()=>this.finPartie();
+        }else{
             this.dessinerGrille();
             this.canvas.onclick = this.jouerCoup;
         }
     }
-
 }
 mp = new Morpion();
