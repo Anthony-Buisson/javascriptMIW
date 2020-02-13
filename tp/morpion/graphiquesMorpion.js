@@ -1,8 +1,8 @@
 export class GraphiquesMorpion {
-    constructor(){
+    constructor(csize){
         this.canvas = document.querySelector('#morpionZone');
         this.ctx = this.canvas.getContext('2d');
-        this.cellSize = 102; //doit etre pair
+        this.cellSize = csize; //doit etre pair
         this.canvas.height = (this.cellSize*5+2);
         this.canvas.width = (this.cellSize*5+2);
     }

@@ -5,7 +5,7 @@ let random = (min, max)=> Math.floor(Math.random() * (max+1 - min) + min);
 class Morpion {
 
     constructor(){
-        this.canva = new GraphiquesMorpion();
+        this.canva = new GraphiquesMorpion(152);
         this.canva.dessinerGrille();
         this.canva.afficherPanneauControles();
 
